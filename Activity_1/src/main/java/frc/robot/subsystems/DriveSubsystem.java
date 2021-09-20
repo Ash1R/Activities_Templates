@@ -45,13 +45,14 @@ public class DriveSubsystem extends SubsystemBase {
     // however if you have 1 motor per side, then remove these
     leftMotor2.set(ControlMode.Follower, DriveConstants.kLeftMotor1Port);
     rightMotor2.set(ControlMode.Follower, DriveConstants.kRightMotor1Port);
-
+++
     //how to follow motors with sparkmaxes
     // leftMotor2.follow(leftMotor1);
     // rightMotor2.follow(rightMotor1);
 
     //TODO: 1. Your robot may need to have the right motors inverted and not the left
     leftMotor1.setInverted(true);
+  
   }
 
   /**
@@ -78,5 +79,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void arcadeDrive(double throttle, double turn) {
     //TODO: 2. Add arcade drive here by setting the motors
+    leftMotor1.set(ControlMode.PercentOutput, throttle - turn);
+    rightMotor1.set(ControlMode.PercentOutput, throttle + turn);
   }
 }

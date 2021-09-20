@@ -41,10 +41,9 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure default commands (will be run continously when nothing else is scheduled)
-    //TODO: 2. Switch this to a new ArcadeDrive, you need to update the method in DriveSubsystem.java
-    
+
     m_robotDrive.setDefaultCommand(
-      new TankDrive(m_robotDrive)
+      new ArcadeDrive(m_robotDrive)
     );
   }
 
