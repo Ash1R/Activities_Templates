@@ -78,5 +78,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void arcadeDrive(double throttle, double turn) {
     //TODO: 2. Add arcade drive here by setting the motors
+    leftMotor1.set(ControlMode.PercentOutput, throttle + turn);
+    rightMotor1.set(ControlMode.PercentOutput, throttle - turn);
   }
 }
