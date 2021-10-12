@@ -31,7 +31,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   CANSparkMax sparkMotor = new CANSparkMax(51, MotorType.kBrushless);
   Encoder sparkEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-  
 
   TalonSRX leftMotor1 = new TalonSRX(DriveConstants.kLeftMotor1Port);
   TalonSRX leftMotor2 = new TalonSRX(DriveConstants.kLeftMotor2Port);
@@ -93,7 +92,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void wheelOfFortune(double kP, double kI, double kD){
     PIDController pid = new PIDController(kP, kI, kD);
-    sparkMotor.set(pid.calculate(sparkEncoder.getDistance(), 180));
+    sparkMotor.set(pid.calculate(sparkEncoder.getDistance(), 190));
   }
   
 }

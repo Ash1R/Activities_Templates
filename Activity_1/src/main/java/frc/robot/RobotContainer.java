@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.*;
 public class RobotContainer {
   //subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final RotationSubsystem m_robotRotate = new RotationSubsystem();
 
   //autonomous command, will spin robot in circle
   private final Command m_autoCommand =   new RunCommand(
@@ -41,10 +42,11 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure default commands (will be run continously when nothing else is scheduled)
-
+    
     m_robotDrive.setDefaultCommand(
       new ArcadeDrive(m_robotDrive)
     );
+
   }
 
     /**
@@ -54,11 +56,23 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickButton a = new JoystickButton(controller, DriveConstants.kA);
+    a.whenHeld(new RunCommand(() -> m_robotDrive.tankDrive(-1, 1)));
 
+    JoystickButton b = new JoystickButton(controller, DriveConstants.kB);
+    b.whenHeld(new RunCommand(() -> m_robotRotate.powerSet(1)));
+    b.whenReleased(new RunCommand(() -> m_robotRotate.powerSet(0)));
+
+    JoystickButton x = new JoystickButton(controller, DriveConstants.kX);
+    x.whenHeld(new RunCommand(() -> m_robotDrive.tankDrive(-0.5, 0.5)));
+
+    JoystickButton y = new JoystickButton(controller, DriveConstants.kY);
+    y.whenHeld(new RunCommand(() -> m_robotDrive.wheelOfFortune(1.5, 0, 0.5)));
   }
 
   public static double getMotorSpeed(int port) {
     // get a joystick axis
+
     return controller.getRawAxis(port);
   }
 
