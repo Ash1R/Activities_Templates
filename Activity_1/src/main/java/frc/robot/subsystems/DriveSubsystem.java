@@ -39,7 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
   CANSparkMax sparkMotor = new CANSparkMax(51, MotorType.kBrushless);
   Encoder sparkEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
   
-  PIDController pid = new PIDController(kP, kI, kD);
+  PIDController pid = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
 
   //how to set up sparkmaxes, if your robot has those
   // CANSparkMax leftMotor1 = new CANSparkMax(DriveConstants.kLeftMotor1Port, MotorType.kBrushless);
