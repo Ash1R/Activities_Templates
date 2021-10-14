@@ -28,7 +28,7 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     m_drive.arcadeDrive(
-      RobotContainer.getMotorSpeed(DriveConstants.kLeftJoyAxis), 
-      RobotContainer.getMotorSpeed(DriveConstants.kRightJoyAxis));
+      RobotContainer.getMotorSpeed(DriveConstants.kRightJoyAxis), 
+      RobotContainer.getMotorSpeed(DriveConstants.kLeftJoyAxis));
   }
 }
