@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.*;
 public class RobotContainer {
   //subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final RotationSubsystem m_robotRotate = new RotationSubsystem();
 
   //autonomous command, will spin robot in circle
   private final Command m_autoCommand =   new RunCommand(
@@ -41,11 +42,11 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure default commands (will be run continously when nothing else is scheduled)
-    //TODO: 2. Switch this to a new ArcadeDrive, you need to update the method in DriveSubsystem.java
     
-     m_robotDrive.setDefaultCommand(
+    m_robotDrive.setDefaultCommand(
       new ArcadeDrive(m_robotDrive)
     );
+
   }
 
     /**
@@ -55,15 +56,25 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    //match joystick button to methods
+    new JoystickButton(controller, JoystickConstants.kA)
+      .whenHeld(new InstantCommand(m_robotDrive::halfSpeed, m_robotDrive))
+      .whenReleased(new InstantCommand(m_robotDrive::fullSpeed, m_robotDrive));
+
+    JoystickButton y = new JoystickButton(controller, JoystickConstants.kY);
+    y.whenHeld(new RunCommand(() -> m_robotDrive.wheelOfFortune(DriveConstants.setpoint)));
+    y.whenReleased(new RunCommand(() -> m_robotDrive.stopPID()));
 
   }
 
   public static double getMotorSpeed(int port) {
     // get a joystick axis
+
     return controller.getRawAxis(port);
   }
 
   /**
+   * 
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
