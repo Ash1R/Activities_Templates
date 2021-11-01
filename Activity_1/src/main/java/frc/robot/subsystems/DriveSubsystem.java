@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANEncoder;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,6 +29,7 @@ public class DriveSubsystem extends SubsystemBase {
   //SensorCollection leftEncoder1 = talon.configSelectedFeedbackSensor(FeedbackDevice.leftMotor1, 0, 100);
   //SensorCollection rightEncoder2 = talon.configSelectedFeedbackSensor(FeedbackDevice.rightMotor1, 0, 100);
 
+  int motorID = 1;
   TalonSRX leftMotor1 = new TalonSRX(DriveConstants.kLeftMotor1Port);
   TalonSRX leftMotor2 = new TalonSRX(DriveConstants.kLeftMotor2Port);
   TalonSRX rightMotor1 = new TalonSRX(DriveConstants.kRightMotor1Port);
@@ -35,10 +37,10 @@ public class DriveSubsystem extends SubsystemBase {
 
 
   double speed = 1;
+  double neoMotorPower;
 
-  CANSparkMax sparkMotor = new CANSparkMax(51, MotorType.kBrushless);
-  Encoder sparkEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-  
+  CANSparkMax sparkMotor = new CANSparkMax(motorID, MotorType.kBrushless);
+  CANEncoder sparkEncoder = sparkMotor.getEncoder();
   PIDController pid = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
 
   //how to set up sparkmaxes, if your robot has those
@@ -60,7 +62,7 @@ public class DriveSubsystem extends SubsystemBase {
     //how to follow motors with sparkmaxes
     // leftMotor2.follow(leftMotor1);
     // rightMotor2.follow(rightMotor1);
-    sparkEncoder.setDistancePerPulse(1);
+    //sparkEncoder.setDistancePerPulse(1);
 
    
   }
@@ -115,7 +117,7 @@ public class DriveSubsystem extends SubsystemBase {
   */
 
   public void periodic(){
-    neoMotorPower = pid.calculate(sparkEncoder.getDistance(), 420);
+    neoMotorPower = pid.calculate(sparkEncoder.getPosition(), 420);
   }
 
   public void wheelOfFortune(){
